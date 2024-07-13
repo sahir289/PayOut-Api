@@ -22,5 +22,6 @@ model fileUserData {
   amount                   Int
   currency                 String
   response                 Json?
+  mode                     String?
   createdAt                DateTime @default(now())
 }

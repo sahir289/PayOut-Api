@@ -70,6 +70,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
                 amount: data.amount,
                 currency: 'INR',
                 response: response.data,
+                mode: row['Payment Type']
               }
             });
             console.log("Stored in MongoDB:", fileData);
@@ -90,6 +91,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
                 amount: data.amount,
                 currency: 'INR',
                 response: error?.response?.data || error.message, // Store error message or response data
+                mode: row['Payment Type']
               }
             });
             console.log("Stored error in MongoDB:", fileData);
@@ -111,6 +113,16 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     });
 });
 
+app.get('/get-res', async (req, res) => {
+  try {
+    const getRes = await prisma.fileUserData.findMany()
+    console.log("🚀 ~ app.get ~ getRes:", getRes)
+    res.send(getRes)
+  } catch (error) {
+    console.log("🚀 ~ app.get ~ error:", error)
+
+  }
+})
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
