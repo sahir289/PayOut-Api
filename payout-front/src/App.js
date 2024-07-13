@@ -85,19 +85,6 @@ function App() {
         </form>
       </div>
 
-      {/* Display responses */}
-      <div className='mt-5'>
-        {responses.length > 0 && (
-          <div className='flex flex-col items-center'>
-            <h2 className='text-xl font-bold mb-3'>Responses from Server:</h2>
-            <ul className='text-gray-800'>
-              {responses.map((response, index) => (
-                <li key={index}>{JSON.stringify(response)}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
 
       <div className='p-10'>
         <DataTable fileData={fileData} />
