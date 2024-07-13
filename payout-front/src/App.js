@@ -56,7 +56,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/get-res');
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/get-res`);
         console.log("🚀 ~ useEffect ~ response:", response);
         setFileData(response.data)
       } catch (error) {
