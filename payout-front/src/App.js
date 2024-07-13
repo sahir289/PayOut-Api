@@ -6,8 +6,11 @@ function App() {
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [responses, setResponses] = useState([]);
-  const [fileData , setFileData] = useState([])
-  console.log("🚀 ~ App ~ fileData:", fileData)
+  const [fileData, setFileData] = useState([])
+
+  // password
+  const password = "admin@123"
+  const [pass, setPass] = useState(false);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -53,6 +56,15 @@ function App() {
     }
   };
 
+  const changeHandler = (e) => {
+    console.log("🚀 ~ changeHandler ~ e:", e.target.value)
+    const pass = e.target.value;
+    if (password === pass) {
+      setPass(true)
+    }
+
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,26 +81,41 @@ function App() {
 
   return (
     <>
-      <div className='flex justify-center mt-10 font-serif font-bold text-3xl'>
-        <p>Add file here</p>
-      </div>
-      <div className='flex justify-center mt-10'>
-        <form onSubmit={handleSubmit}>
-          <input type='file' onChange={handleFileChange} />
-          <button
-            type='submit'
-            className='mx-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-            disabled={isLoading} // Disable the button when isLoading is true
-          >
-            {isLoading ? 'Uploading...' : 'Upload'}
-          </button>
-        </form>
-      </div>
 
 
-      <div className='p-10'>
-        <DataTable fileData={fileData} />
-      </div>
+      {pass ?
+
+        <>
+          <div className='flex justify-center mt-10 font-serif font-bold text-3xl'>
+            <p>Add file here</p>
+          </div>
+          <div className='flex justify-center mt-10'>
+            <form onSubmit={handleSubmit}>
+              <input type='file' onChange={handleFileChange} />
+              <button
+                type='submit'
+                className='mx-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+                disabled={isLoading} // Disable the button when isLoading is true
+              >
+                {isLoading ? 'Uploading...' : 'Upload'}
+              </button>
+            </form>
+          </div>
+          <div className='p-10'>
+            <DataTable fileData={fileData} />
+          </div>
+        </>
+
+        :
+        <div className='text-center mt-20'>
+          <label>Password:</label>
+          <input type='password' className='border-2' onChange={changeHandler} />
+
+        </div>
+
+      }
+
+
     </>
   );
 }
