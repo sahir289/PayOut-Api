@@ -35,7 +35,7 @@ function App() {
     setIsLoading(true); // Set loading state to true
 
     try {
-      const response = await axios.post('http://localhost:8000/upload', formData, {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -47,7 +47,7 @@ function App() {
       console.error('Error uploading file:', error);
     } finally {
       setIsLoading(false); // Set loading state back to false
-      const response = await axios.get('http://localhost:8000/get-res');
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/get-res`);
       console.log("🚀 ~ handleSubmit ~ response:", response)
       setFileData(response.data)
     }
