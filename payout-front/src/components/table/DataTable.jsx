@@ -14,7 +14,7 @@ const DataTable = (props) => {
                 dataSource={fileData}
                 className="table-global"
                 pagination={{
-                    pageSize: 10,
+                    pageSize: 100,
                 }}
                 scroll={{
                     y: 440,
