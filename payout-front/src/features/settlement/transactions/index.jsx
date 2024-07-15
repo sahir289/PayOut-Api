@@ -123,41 +123,103 @@
 // export default App;
 
 
-import React, { lazy, useEffect } from "react";
-import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-// import { themeChange } from 'theme-change';
-import initializeApp from "./app/init";
-import Layout from "./containers/Layout";
 
-const Login = lazy(() => import('./pages/Login'))
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import DataTable from '../../../components/table/DataTable';
 
-initializeApp()
+const SettlementTransactions = () => {
+  const [file, setFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [responses, setResponses] = useState([]);
+  const [fileData, setFileData] = useState([])
 
-// const token = checkAuth()
+  // password
+  const password = "admin@123"
+  const [pass, setPass] = useState(false);
 
-function App() {
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
-  // useEffect(() => {
-  //   themeChange(false)
-  // }, [])
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
- const token = null;
+    // Check if the file is selected
+    if (!file) {
+      console.error('No file selected.');
+      alert('No file selected.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // Check if formData has the 'file' entry
+    if (!formData.has('file')) {
+      console.error('Form data is empty.');
+      return;
+    }
+
+    setIsLoading(true); // Set loading state to true
+
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      // Update responses with the new response data
+      setResponses((prevResponses) => [...prevResponses, response.data]);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    } finally {
+      setIsLoading(false); // Set loading state back to false
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/get-res`);
+      console.log("🚀 ~ handleSubmit ~ response:", response)
+      setFileData(response.data)
+    }
+  };
+
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/get-res`);
+        console.log("🚀 ~ useEffect ~ response:", response);
+        setFileData(response.data)
+      } catch (error) {
+        console.error('Error fetching initial data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-
-          {/* Place new routes over this */}
-          <Route path="/app/*" element={<Layout />} />
-
-          {/* <Route path="*" element={<Navigate to={token ? "/app/dashboard" : "/login"} replace />} /> */}
-
-        </Routes>
-      </Router>
+      <div className='flex justify-center mb-4 font-serif font-bold text-3xl'>
+        <p>Add file here</p>
+      </div>
+      <div className='flex justify-center mb-6 '>
+        <form onSubmit={handleSubmit}>
+          <input type='file' onChange={handleFileChange} />
+          <button
+            type='submit'
+            className='mx-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+            disabled={isLoading} // Disable the button when isLoading is true
+          >
+            {isLoading ? 'Uploading...' : 'Upload'}
+          </button>
+        </form>
+      </div>
+      <div className=''>
+        <DataTable fileData={fileData} />
+      </div>
     </>
   )
 }
 
-export default App;
-
+export default SettlementTransactions

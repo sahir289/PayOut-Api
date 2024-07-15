@@ -1,7 +1,8 @@
-import React from 'react'
-import { Space, Table, Tag, } from 'antd';
+import { Table } from 'antd';
+import React from 'react';
 import { formatTimestamp } from '../../utils/utils';
-const { Column, ColumnGroup } = Table;
+const { Column } = Table;
+
 const DataTable = (props) => {
 
     const { fileData } = props;
@@ -17,7 +18,8 @@ const DataTable = (props) => {
                     pageSize: 10,
                 }}
                 scroll={{
-                    y: 440,
+                    x: '400px',
+                    y: 485,
                 }}
                 rowKey={(record, index) => index}
             >
@@ -26,12 +28,12 @@ const DataTable = (props) => {
                     key="index"
                     className="bg-white"
                     render={(text, record, index) => index + 1}
-                    width={"5%"}
+                    width={"60px"}
                 />
                 <Column
                     title="Beneficiary Name"
                     dataIndex="beneficiaryName"
-                    width={"10%"}
+                    width={"170px"}
                     key="beneficiaryName"
                     className="bg-white"
                 />
@@ -39,7 +41,8 @@ const DataTable = (props) => {
                     title="Destination Bank"
                     dataIndex="destinationBank"
                     key="destinationBank"
-                    width={"12%"}
+                    // width={"12%"}
+                    width={"170px"}
                     className="bg-white"
                 />
                 <Column
@@ -47,14 +50,16 @@ const DataTable = (props) => {
                     dataIndex="destinationAccountNumber"
                     key="destinationAccountNumber"
                     className="bg-white"
-                    width={"13%"}
+                    // width={"13%"}
+                    width={"170px"}
                 />
                 <Column
                     title="IFSC"
                     dataIndex="destinationBankIfsc"
                     key="destinationBankIfsc"
                     className="bg-white"
-                    width={"11%"}
+                    // width={"11%"}
+                    width={"170px"}
                 />
 
                 <Column
@@ -62,7 +67,8 @@ const DataTable = (props) => {
                     dataIndex="amount"
                     key="amount"
                     className="bg-white"
-                    width={"6%"}
+                    // width={"6%"}
+                    width={"100px"}
 
                 />
                 <Column
@@ -70,14 +76,16 @@ const DataTable = (props) => {
                     dataIndex="currency"
                     key="currency"
                     className="bg-white"
-                    width={"6%"}
+                    // width={"6%"}
+                    width={"100px"}
                 />
                 <Column
                     title="UTR"
                     dataIndex="response"
                     key="response"
                     className="bg-white"
-                    width={"8%"}
+                    // width={"8%"}
+                    width={"170px"}
                     render={(values, data) => {
                         console.log("🚀 ~ DataTable ~ values:", values)
                         return (
@@ -92,14 +100,16 @@ const DataTable = (props) => {
                     dataIndex="mode"
                     key="mode"
                     className="bg-white"
-                    width={"8%"}
+                    // width={"8%"}
+                    width={"100px"}
                 />
                 <Column
                     title="Time"
                     dataIndex="createdAt"
                     key="createdAt"
                     className="bg-white"
-                    width={"15%"}
+                    // width={"15%"}
+                    width={"170px"}
                     render={(values, data) => {
                         console.log("🚀 ~ DataTable ~ values:", values)
                         return (
@@ -115,7 +125,8 @@ const DataTable = (props) => {
                     dataIndex="response"
                     key="response"
                     className="bg-white"
-                    width={"10%"}
+                    // width={"10%"}
+                    width={"130px"}
                     render={(values, data) => {
                         console.log("🚀 ~ DataTable ~ values:", values)
                         return (
@@ -130,7 +141,8 @@ const DataTable = (props) => {
                     dataIndex="response"
                     key="response"
                     className="bg-white"
-                    width={"10%"}
+                    // width={"10%"}
+                    width={"170px"}
                     render={(values, data) => {
                         console.log("🚀 ~ DataTable ~ values:", values)
                         return (
